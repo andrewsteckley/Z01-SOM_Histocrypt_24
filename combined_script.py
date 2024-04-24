@@ -1,7 +1,7 @@
-# Z01.1 Preparation of Study Corpus.ipynb
+# Z01.1_Preparation_of_Study_Corpus.ipynb
 print(80*"=")
 print(80*"=")
-print(f"||  Running Z01.1 Preparation of Study Corpus.ipynb")
+print(f"||  Running Z01.1_Preparation_of_Study_Corpus.ipynb")
 print(80*"=")
 print(80*"=")
 
@@ -117,6 +117,13 @@ corpus.save(study_corpus_file)
 
 
 # -------------------- Cell --------------------
+from voynichlib.Corpus import Corpus
+TEMPA = Corpus.from_corpus('temp', corpus, criteria={'currier_languages':['A']})
+TEMPB = Corpus.from_corpus('temp', corpus, criteria={'currier_languages':['B']})
+TEMPAB = Corpus.from_corpus('temp', corpus, criteria={'currier_languages':['A', 'B']})
+
+
+# -------------------- Cell --------------------
 corpus.folios()
 
 
@@ -127,12 +134,15 @@ corpus_x = Corpus.from_file(study_corpus_file)
 # -------------------- Cell --------------------
 
 
+# -------------------- Cell --------------------
 
 
-# Z01.2 Token Cohorts.ipynb
+
+
+# Z01.2_Token_Cohorts.ipynb
 print(80*"=")
 print(80*"=")
-print(f"||  Running Z01.2 Token Cohorts.ipynb")
+print(f"||  Running Z01.2_Token_Cohorts.ipynb")
 print(80*"=")
 print(80*"=")
 
@@ -146,7 +156,7 @@ import pandas as pd
 
 from qlynx.file_utils import store_pkl, load_pkl
 from voynichlib.Corpus import Corpus
-from voynichlib.ProbMassFunction import ProbMassFunction
+from voynichlib.ProbDistribution import ProbDistribution
 
 # %reload_ext autoreload
 # %autoreload 2
@@ -236,14 +246,14 @@ for cohort, criteria in criteria_by_c.items():
     label = f"'{cohort}'"
     corpus_by_c[cohort] = Corpus.from_corpus(f'Scribe 1 - {cohort}', corpus, criteria=criteria, suppress_summary=True )
     df = corpus_by_c[cohort].tokens_df()
-    pmfs_by_c[cohort] = ProbMassFunction(list(df['token']))
+    pmfs_by_c[cohort] = ProbDistribution(list(df['token']))
     tokens_by_c[cohort] = pmfs_by_c[cohort].values
     token_lengths = corpus_by_c[cohort].tokens_df()['token_length_min' ]
     print(f"Scribe 1, {label:20}: {np.mean(token_lengths):.2f} +/- {np.std(token_lengths):.2f}  [{np.min(token_lengths)}, {np.max(token_lengths)}]\t\t{len(token_lengths): >8,} obs")
 
 
     glyph_df = corpus_by_c[cohort].glyphs_df()
-    glyph_pmfs_by_c[cohort] = ProbMassFunction(list(glyph_df['glyph']))
+    glyph_pmfs_by_c[cohort] = ProbDistribution(list(glyph_df['glyph']))
     glyphs_by_c[cohort] = glyph_pmfs_by_c[cohort].values
    
     token_ws_by_c[cohort]  = token_lengths
@@ -253,7 +263,7 @@ for cohort, criteria in criteria_by_c.items():
     for w in range(1,11):
         tokens_for_pn = list(df[df['token_length_min'] == w]['token'])
         tokens_by_cw[cohort][w] = tokens_for_pn
-        pmfs_by_cw[cohort][w] = ProbMassFunction(tokens_for_pn)
+        pmfs_by_cw[cohort][w] = ProbDistribution(tokens_for_pn)
         pass
     pass
     
@@ -273,6 +283,12 @@ print(f"Number of occurrences of 'daiin' in FIRST cohort = {pmfs_by_c['FIRST'].c
 print(f"Probability of 'daiin' in FIRST cohort (no smoothing)= {pmfs_by_c['FIRST'].prob('daiin'):.2%}")
 print(f"Probability of 'daiin' in FIRST cohort (laplace smoothing)= {pmfs_by_c['FIRST'].prob('daiin', smooth='laplace'):.2%}")
 print(f"Probability of 'daiin' in FIRST cohort (minimal smoothing)= {pmfs_by_c['FIRST'].prob('daiin', smooth='minimal'):.2%}")
+print()
+print(f"Total tokens count in FIRST cohort = {pmfs_by_c['FIRST'].total_count:,}")
+print(f"Number of occurrences of 'daiin' in FIRST cohort = {pmfs_by_c['FIRST'].count('aiin'):,}")
+print(f"Probability of 'aiin' in FIRST cohort (no smoothing)= {pmfs_by_c['FIRST'].prob('aiin'):.2%}")
+print(f"Probability of 'aiin' in FIRST cohort (laplace smoothing)= {pmfs_by_c['FIRST'].prob('aiin', smooth='laplace'):.2%}")
+print(f"Probability of 'aiin' in FIRST cohort (minimal smoothing)= {pmfs_by_c['FIRST'].prob('aiin', smooth='minimal'):.2%}")
 
 
 
@@ -292,14 +308,14 @@ df = corpus_by_c['MIDDLE'].tokens_df()
 for i, cohort in enumerate(random_cohorts):
     num_to_sample = num_in_second if i <3 else num_in_pre
     tokens_rand[cohort] = random.sample(tokens_from_mid, num_to_sample)
-    pmfs_by_c[cohort] = ProbMassFunction(tokens_rand[cohort])
+    pmfs_by_c[cohort] = ProbDistribution(tokens_rand[cohort])
     pmfs_by_cw[cohort] = {}
     tokens_by_cw[cohort] = {}
     for w in range(1,11):
         tokens_by_cw[cohort][w] = [x for x in tokens_rand[cohort] if len(x)==w ]
         if not tokens_by_cw[cohort][w]:
             print(f"tokens_by_cw[{cohort}][{w}] is NONE")
-        pmfs_by_cw[cohort][w] = ProbMassFunction(tokens_by_cw[cohort][w])
+        pmfs_by_cw[cohort][w] = ProbDistribution(tokens_by_cw[cohort][w])
         pass
     pass
     token_lengths = []
@@ -410,10 +426,10 @@ x_token_cohort_data.keys()
 
 
 
-# Z01.3 Token Length Analysis.ipynb
+# Z01.3_Token_Length_Analysis.ipynb
 print(80*"=")
 print(80*"=")
-print(f"||  Running Z01.3 Token Length Analysis.ipynb")
+print(f"||  Running Z01.3_Token_Length_Analysis.ipynb")
 print(80*"=")
 print(80*"=")
 
@@ -427,14 +443,10 @@ from qlynx.plot_utils import plot_combined_curves
 from qlynx.plot_utils import plot_heatmap_Z001
 from qlynx.plot_utils import plot_adjacent_histograms_with_binomial_curves
 from qlynx.stats_utils import *
-from voynichlib.ProbMassFunction import ProbMassFunction
+from voynichlib.ProbDistribution import ProbDistribution
 
 # %reload_ext autoreload
 # %autoreload 2
-
-
-# -------------------- Cell --------------------
-bayes_factor_binomial(0, 300, 0, .01)
 
 
 # -------------------- Cell --------------------
@@ -530,8 +542,8 @@ def do_cohort_similarity_analysis(test_type: str,
                 signficance_stat = p
             elif test_type == 'bayes':
                 # bayes_factor = find_bayes_factor(tokens_ws, ref_tokens_ws)
-                pmf1 = ProbMassFunction(list(tokens_ws)) 
-                pmf2 = ProbMassFunction(list(ref_tokens_ws))
+                pmf1 = ProbDistribution(list(tokens_ws)) 
+                pmf2 = ProbDistribution(list(ref_tokens_ws))
                 vals = pmf1.values
                 probs1 = {k: pmf1.prob(k, smooth='minimal') for k,v in pmf2.pmf.items()}
                 probs2 = {k: pmf2.prob(k, smooth='minimal') for k,v in pmf2.pmf.items()}
@@ -605,10 +617,10 @@ for i in range(len(all_cohorts)):
 
 
 
-# Z01.4 Token Propensities By Location.ipynb
+# Z01.4_Token_Propensities_Analysis.ipynb
 print(80*"=")
 print(80*"=")
-print(f"||  Running Z01.4 Token Propensities By Location.ipynb")
+print(f"||  Running Z01.4_Token_Propensities_Analysis.ipynb")
 print(80*"=")
 print(80*"=")
 
@@ -619,7 +631,7 @@ import pandas as pd
 from IPython.display import display, HTML
 import os
 
-from qlynx.file_utils import load_pkl
+from qlynx.file_utils import load_pkl, store_pkl
 from qlynx.stats_utils import *
 from qlynx.display_utils import render_html_to_image
 from voynichlib.utils import display_voynichese
@@ -874,7 +886,7 @@ if do_parametric_studies:
 # -------------------- Cell --------------------
 token_propensity_dfs = {}
 print(f"smoothing: {smooth}")
-print(f"Summary Dataframes,   p_value_threshold= {THRESHOLDS['p_value']} , bayes_threshold={THRESHOLDS['bayes_factor']:.1f}")
+print(f"Summary Dataframes, p_value_threshold= {THRESHOLDS['p_value']}, bayes_threshold={THRESHOLDS['bayes_factor']:.1f}")
 N_tokens_df = pd.DataFrame(columns = ['cohort',  'N_p', 'N_p_af', 'N_p_av', 'N_b', 'N_b_af', 'N_b_av',  'N_either', 'N_both'])
 
 for cohort in cohorts_with_randoms:
@@ -885,6 +897,7 @@ for cohort in cohorts_with_randoms:
                                                                THRESHOLDS['p_value'], 
                                                                THRESHOLDS['bayes_factor'])
     df = token_propensity_dfs[cohort]
+    print(f"DEBUG {cohort}:  {len(df)}")
     N_p = len(df[ df['sig_p_value']])
     N_p_af =  len(df[ df['sig_p_value'] & (df['propensity']>0) ])
     N_p_av =  len(df[ df['sig_p_value'] & (df['propensity']<0) ])
@@ -960,6 +973,11 @@ extract_df('FOURTH', 'p_value', 'tokens')
 
 
 # -------------------- Cell --------------------
+file_path = 'voynich_data/outputs/token_propensity_dfs.pkl'
+store_pkl(token_propensity_dfs, file_path) 
+
+
+# -------------------- Cell --------------------
 cohort_title_dict = {
 'ALL':'All in Corpus',
 'MIDDLE':'Middle Positions',
@@ -999,10 +1017,7 @@ def display_cohort_tendency_summary(cohort: str, component:str, stat_type:str, f
         table_title = f"Positional Tendency Tokens<br>{cohort_title_dict[cohort]}"
         num_tokens_in_target = pmfs_by_c[cohort].total_count
         num_tokens_in_ref = pmfs_by_c[reference_cohort].total_count
-        
-        # num_tokens_in_target = len(corpus_by_c[cohort].tokens_df())
-        # num_tokens_in_ref = len(corpus_by_c[reference_cohort].tokens_df())
-        component_text = 'Tokens'
+                component_text = 'Tokens'
         
     elif component == 'glyphs':
         df = glyph_propensity_dfs[cohort].sort_values(by='propensity', ascending=False)
@@ -1183,7 +1198,7 @@ display_cohort_tendency_summary('RAND 6', 'tokens', 'bayes', 'voynich_data/outpu
 
 # -------------------- Cell --------------------
 display_cohort_tendency_summary('TOP', 'tokens', 'p_value', 'voynich_data/outputs/T_token_propensities_TOP', width=630, height=500)
-display_cohort_tendency_summary('FIRST', 'tokens', 'p_value', 'voynich_data/outputs/T_token_propensities_FIRST', width=630, height=1600)
+display_cohort_tendency_summary('FIRST', 'tokens', 'p_value', 'voynich_data/outputs/CUTOFF_T_token_propensities_FIRST', width=630, height=1600)
 display_cohort_tendency_summary('LAST', 'tokens', 'p_value', 'voynich_data/outputs/T_token_propensities_LAST', width=630, height=1000)
 display_cohort_tendency_summary('BEFORE', 'tokens', 'p_value', 'voynich_data/outputs/T_token_propensities_BEFORE', width=630, height=500)
 display_cohort_tendency_summary('AFTER', 'tokens', 'p_value', 'voynich_data/outputs/T_token_propensities_AFTER', width=630, height=500)
@@ -1202,15 +1217,18 @@ display_cohort_tendency_summary('FIRST', 'tokens', 'p_value', 'voynich_data/outp
 
 
 # -------------------- Cell --------------------
-display_cohort_tendency_summary('TOP', 'tokens', 'bayes', 'voynich_data/outputs/T_token_propensities_TOP', width=630, height=500)
+display_cohort_tendency_summary('FIRST', 'tokens', 'p_value', 'voynich_data/outputs/T_token_propensities_FIRST', width=630, height=2000)
+
+
+# -------------------- Cell --------------------
 
 
 
 
-# Z01.5 Extra Analyses.ipynb
+# Z01.5_Extra_Analyses.ipynb
 print(80*"=")
 print(80*"=")
-print(f"||  Running Z01.5 Extra Analyses.ipynb")
+print(f"||  Running Z01.5_Extra_Analyses.ipynb")
 print(80*"=")
 print(80*"=")
 
@@ -1243,8 +1261,6 @@ THRESHOLDS = {
 }
 THRESHOLDS['bayes_factor'] = np.exp(THRESHOLDS['ln_bayes_factor'])
 reference_cohort = 'MIDDLE'
-# smooth = 'laplace'
-# smooth = 'laplace'
 smooth = None
 
 
@@ -1267,14 +1283,7 @@ glyphs_by_c = token_cohort_data['glyphs_by_c']
 # -------------------- Cell --------------------
 file_path = 'voynich_data/outputs/token_propensity_dfs.pkl'
 token_propensity_dfs = load_pkl(file_path)
-
-
-# -------------------- Cell --------------------
-token_propensity_dfs
-
-
-# -------------------- Cell --------------------
-token_propensity_dfs['TOP']
+token_propensity_dfs['FIRST']
 
 
 # -------------------- Cell --------------------
@@ -1291,8 +1300,7 @@ def make_master_table(criteria):
                 token_dict[token][cohort] = {}
             token_dict[token][cohort] = 0
             if meets_criteria(row):
-                token_dict[token][cohort] = 1 if row['propensity'] > 0 else -1
-                # print(f"{token} {cohort}  {token_dict[token][cohort]}")
+                token_dict[token][cohort] = 1 if row['propensity'] > 1 else -1
             pass
         pass
     pass
@@ -1312,30 +1320,7 @@ def make_master_table(criteria):
         pass
     return df
             
-df = make_master_table('both')
-        # df.loc[len(df)] = [token,
-        #                    top_token_length_dict[token],
-        #                    N_ref,
-        #                    n_ref,
-        #                    N_x,
-        #                    n_x,
-        #                    p_ref,
-        #                    p_x,
-        #                    p_value,
-        #                    verdict_p_value,
-        #                    verdict_bayes_factor,
-        #                    np.round(propensity,1),
-        #                    bayes_factor,
-        #                   binom_stat_le,
-        #                   binom_stat_gt]
-
-
-# -------------------- Cell --------------------
-df = df.sort_values(by='token')
-
-
-# -------------------- Cell --------------------
-df
+master_df = make_master_table('both')
 
 
 # -------------------- Cell --------------------
@@ -1371,13 +1356,11 @@ def plot_custom_heatmap(df):
 
 
 
-plot_custom_heatmap(df)
+plot_custom_heatmap(master_df)
 
 
 # -------------------- Cell --------------------
-import pandas as pd
-
-def html_custom_heatmap_to_file(df, filename):
+def html_table_to_file(df, file_name, width, height):
     # Define the color mapping based on value ranges
     def color_for_value(value):
         if value == -1:
@@ -1397,8 +1380,41 @@ def html_custom_heatmap_to_file(df, filename):
     # Start the HTML document
     html = '<!DOCTYPE html>\n<html>\n<head>\n'
     html += f'<style>table, th, td {{border: 1px solid black; border-collapse: collapse;}} th, td {{padding: 0px; text-align: center;}} th:not(:first-child), td:not(:first-child) {{min-width: {column_width}em; max-width: {column_width}em;}}</style>\n'
-    # html += '<style>table, th, td {border: 1px solid black; border-collapse: collapse;} th, td {padding: 5px; text-align: center;} </style>\n'
+    
+    html += """<style> 
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .legend-label {
+            font-size: 16px;
+        }
+    </style>"""
+    
     html += '</head>\n<body>\n<h1>High Propensity Tokens by Position</h1>'
+
+    html += """    
+    <div class='legend'>
+        <div class='legend-item'>
+            <div class='legend-color' style='background-color: green;'></div>
+            <div class='legend-label'>Affinitive Propensity</div>
+        </div>
+        <div class='legend-item'>
+            <div class='legend-color' style='background-color: red;'></div>
+            <div class='legend-label'>Aversive Propensity</div>
+        </div>
+    </div>
+   """
+    
+    
     
     # Start the HTML table, including headers at the top
     html += '<table><tr><th></th>'
@@ -1424,91 +1440,296 @@ def html_custom_heatmap_to_file(df, filename):
     # End the HTML document
     html += '</body>\n</html>'
     
-    # Write the HTML to the specified file
-    with open(filename, 'w') as file:
-        file.write(html)
-
+    if file_name:
+        current_dir = os.getcwd()
+        print(f"current_dir = {current_dir}")
+        html_filename = file_name + '.html'
+        absolute_html_file_path = os.path.join(current_dir, html_filename)
+        png_filename = file_name + '.png'
+        absolute_png_file_path = os.path.join(current_dir, png_filename)
+        with open(html_filename, 'w') as file:
+            file.write(html)
+            print(f"Wrote {html_filename}")
+        print(f"absolute_html_file_path = {absolute_html_file_path}")
+        render_html_to_image(absolute_html_file_path, absolute_png_file_path, width=width, height=height+129, crop=False)
 
 # Convert the DataFrame to an HTML file
-filename= 'voynich_data/outputs/T_Propensity_Token.html'
-html_custom_heatmap_to_file(df.set_index('token'), filename)
-print(f"HTML table written to {filename}")
+file_name= 'voynich_data/outputs/CUTOFF_T_Propensity_Token'
+html_table_to_file(master_df.set_index('token'), file_name, width=630, height=4000)
+print(f"HTML table written to {file_name}")
 
 
 # -------------------- Cell --------------------
-import matplotlib.pyplot as plt
-
-def plot_two_letter_combination_histogram(tokens, n, ntop, dir):
-    names = {2: 'Two', 3:'Three', 4:'Four', 5:'Five'}
-    # Extract and count leading n-letter combinations
-    combination_count = {}
-    for token in tokens:
-        if len(token) > n:
-            if dir=='Lead':
-                combination = token[:n].lower() # Consider the combination in lowercase to avoid case-sensitive counting
-            elif dir == 'Trail':
-                combination = token[-n:].lower() # Consider the combination in lowercase to avoid case-sensitive counting
-                
-            if combination in combination_count:
-                combination_count[combination] += 1
-            else:
-                combination_count[combination] = 1
-
-    # Prepare data for plotting
-    combinations = list(combination_count.keys())
-    counts = list(combination_count.values())
-
-    # Sort the combinations by count
-    sorted_indices = sorted(range(len(counts)), key=lambda i: counts[i], reverse=True)
-    sorted_combinations = [combinations[i] for i in sorted_indices]
-    sorted_counts = [counts[i] for i in sorted_indices]
-    a = zip(sorted_combinations, sorted_counts)
-    # print([x for x in a])
-
-    # Plotting
-    plt.figure(figsize=(10, 8))
-    plt.barh(sorted_combinations[:ntop], sorted_counts[:ntop], color='skyblue')
-    plt.xlabel('Frequency')
-    plt.ylabel(f'{names[n]}-letter Combination')
-    plt.title(f'Histogram of {dir}ing {names[n]}-letter Combinations')
-    plt.gca().invert_yaxis()  # To display the bar with the highest count at the top
-
-    plt.ion()  # Interactive mode on
-    plt.show()
-    plt.pause(2)
-    plt.close()  
-
-# Example usage
-
-
+top_length = int(len(df)/2)
+bottom_length = len(df) - top_length
+df1 = df[:top_length]
+df2 = df[-bottom_length:]
 
 
 # -------------------- Cell --------------------
-(set(''.join(tokens)))
+print("Master Propensity Table, Part 1")
+df1.head(top_length)
 
 
 # -------------------- Cell --------------------
-tokens = corpus_by_c['ALL'].tokens()
+print("Master Propensity Table, Part 2")
+df2.head(bottom_length)
 
 
 # -------------------- Cell --------------------
-plot_two_letter_combination_histogram(tokens, 4, 20, dir='Trail')
+bunn_dict = {}
+bunn_dict['FIRST_OFTEN'] = ['dai', 'daiin', 'dair', 'sai', 'saiin', 'sar', 'sol']
+bunn_dict['FIRST_NEVER'] = ['ai', 'aiin', 'air', 'al', 'am', 'chcthy', 'chdy', 'checkhy', 'cheedy', 'cheky', 'cheody', 'chody', 'chy', 
+                            'dy', 'kai', 'kedy', 'keedy', 'okal', 'okedy', 'oky', 'oly', 'opchedy,', 'otai', 'otal', 'otar', 'oty', 
+                            'raiin', 'shckhy']
+bunn_dict['LAST_OFTEN'] = ['am', 'dy', 'oky', 'oly', 'qoky']
+bunn_dict['LAST_NEVER'] = ['ai', 'cheo', 'dai', 'kai', 'kaiin', 'okai', 'otai', 'qokai', 'qokain', 'qotai', 'sai', 'shckhy', 'sheedy']
 
 
 # -------------------- Cell --------------------
-plot_two_letter_combination_histogram(tokens, 2, 20, dir='Lead')
+# file_path = 'voynich_data/outputs/token_propensity_dfs.pkl'
+# token_propensity_dfs = load_pkl(file_path)
 
 
 # -------------------- Cell --------------------
-plot_two_letter_combination_histogram(tokens, 3, 20, dir='Lead')
+def make_bunn_comparison_dataframe(cohort, tilt): 
+    num_tokens_in_target = pmfs_by_c[cohort].total_count
+    xdf = token_propensity_dfs[cohort]
+    xdf_first_affinitive = xdf[(xdf['sig_p_value'] > 0) & (xdf['sig_BF'] > 0) & (xdf['propensity'] >= 1)]
+    xdf_first_aversive = xdf[(xdf['sig_p_value'] > 0) & (xdf['sig_BF'] > 0) & (xdf['propensity'] < 1)]
+    if tilt ==1:
+        study_set = set(xdf_first_affinitive.index)
+        bunn_set = set(bunn_dict[f"{cohort}_OFTEN"])
+        all_set = {*study_set, *bunn_set}
+        tilt_label = 'POSITIVE'
+    elif tilt ==-1:
+        study_set = set(xdf_first_aversive.index)
+        bunn_set = set(bunn_dict[f"{cohort}_NEVER"])
+        all_set = {*study_set, *bunn_set}
+        tilt_label = 'NEGATIVE'
+    # print(f"{cohort} {tilt_label}")
+    both = []
+    missing_in_bunn = []
+    not_in_study = []
+    
+    for tok in sorted(all_set):
+        if tok in study_set and tok not in bunn_set:
+            color = 'black'
+            missing_in_bunn.append(tok)
+        elif tok not in study_set and tok in bunn_set:
+            color = 'grey'
+            not_in_study.append(tok)
+        elif  tok in study_set and tok in bunn_set:
+            color = 'red'
+            both.append(tok)
+    df = pd.DataFrame(columns = ['token', 'expected', 'observed', 'propensity', 'p_value', 'bayes', 'comment_code', 'n_x', 'p_ref', 'color'])
+            
+    def get_row_data(tok):
+        row = xdf.loc[tok]
+        p_value = row['p_value']
+        bayes = row['bayes']
+        prob_ref = row['p_ref']                
+        observed_count = int(row['n_x'])
+        expected_count =  int(np.round(prob_ref * num_tokens_in_target))
+        propensity = row['propensity']
+        p_ref = row['p_ref']
+        n_x = row['n_x']
+        if row['sig_p_value'] & row['sig_BF'] and row['propensity']>=1.:
+            color = 'green'
+        elif row['sig_p_value'] & row['sig_BF'] and row['propensity']<1.:
+            color = 'red'
+        else:
+            color = 'grey'
+            
+        return (expected_count, observed_count, propensity, p_value, bayes, n_x, p_ref, color )
+        
+    for tok in sorted(both):
+        comment_code = 'FOUND'
+        expected_count, observed_count, propensity, p_value, bayes,  n_x, p_ref, color = get_row_data(tok)
+        df.loc[len(df)] = [tok,  expected_count, observed_count, propensity, p_value, bayes, comment_code,  n_x, p_ref, color]
+
+    for tok in sorted(missing_in_bunn):
+        comment_code = 'MISSED'
+        expected_count, observed_count, propensity, p_value, bayes,  n_x, p_ref, color = get_row_data(tok)
+        df.loc[len(df)] = [tok,  expected_count, observed_count, propensity, p_value, bayes, comment_code,  n_x, p_ref, color]
+        
+    for tok in sorted(not_in_study):
+        if tok in xdf.index:
+            comment_code = 'INSIGNIFICANT'
+            expected_count, observed_count, propensity, p_value, bayes,  n_x, p_ref, color = get_row_data(tok)
+        else:
+            comment_code = 'NOT IN CORPUS'
+            p_value =0.
+            bayes = 0.
+            expected_count = 0
+            observed_count = 0
+            propensity = 0.
+            p_ref = 0.
+        df.loc[len(df)] = [tok,  expected_count, observed_count, propensity, p_value, bayes, comment_code,  n_x, p_ref, color]
+    return df
+
+bunn_df = make_bunn_comparison_dataframe('FIRST', -1)
+bunn_df.head(50)
 
 
 # -------------------- Cell --------------------
-plot_two_letter_combination_histogram(tokens, 4, 20, dir='Lead')
+cohort_title_dict = {
+'ALL':'All in Corpus',
+'MIDDLE':'Middle Positions',
+'TOP':'Top Lines of Paragraphs',
+'FIRST': 'First Position on a Line',
+'SECOND': 'Second Position on a Line',
+'THIRD': 'Third Position on a Line',
+'FOURTH': 'Fourth Position on a Line',
+'BEFORE': 'Immediately Before a Drawing',
+'AFTER':'Immediately After a Drawing',
+'LAST': 'Last Position on a Line',
+'RAND 1':'Random Tokens Cohort',
+'RAND 2':'Random Tokens Cohort', 
+'RAND 3':'Random Tokens Cohort',
+'RAND 4':'Random Tokens Cohort',
+'RAND 5':'Random Tokens Cohort',
+'RAND 6':'Random Tokens Cohort',
+}
+def display_bunn_comparison_summary(cohort, tilt, file_name: str = None, width:int=None, height:int=None):
+    df = make_bunn_comparison_dataframe(cohort, tilt)
+    comment_dict = {'FOUND': 'Recognized',
+                    'MISSED': 'Missed',
+                    'INSIGNIFICANT': 'Not Significant',
+                    'NOT IN CORPUS': 'N/A'}
+    
+    table_title = f"Positional Tendency Tokens<br>{cohort_title_dict[cohort]}"
+    num_tokens_in_target = pmfs_by_c[cohort].total_count
+    num_tokens_in_ref = pmfs_by_c[reference_cohort].total_count
+    
+    component_text = 'Tokens'
+    pass
+
+    
+    html_top = """
+<html>
+<head>
+    <style>
+        h3 {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table {
+            border: 3px solid black;
+            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+        }
+
+       .header-row {
+            background-color: #7AA4F8;
+        }     
+        table td, table th {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: #FEEFC2; /*#FFFFD9; light beige for odd rows */
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: white; /* white for even rows */
+        }
+    </style>
+</head>
+<body>"""
+    html_bottom = """
+</body>
+</html>"""
+    html = ''
+        # <th class='header-row' colspan=1 rowspan=2 style='text-align: center;'>Tilt</th>
+    html_table_top = """
+<table style='width:600px'>
+    <tr>
+        <th class='header-row' colspan=2 style='text-align: center;'>Token</th>
+        <th class='header-row' colspan=2 style='text-align: center;'>Counts</th>
+        <th class='header-row' colspan=3 style='text-align: center;'>Stats</th>
+        <th class='header-row' rowspan=2 colspan=3 style='text-align: center;'>Prevalence Approach</th>
+    </tr>
+    <tr>
+        <th class='header-row' >Voynichese</th>
+        <th class='header-row' >Eva-</th>
+        <th class='header-row' >expected</th>
+        <th class='header-row' >observed</th>
+        <th class='header-row' >Propensity</th>
+        <th class='header-row' ><i>p</i>-value</th>
+        <th class='header-row' ><i>log(B)</i></th>
+    </tr>"""    
+    html_1 = html_table_top
+    
+    # color = 'black' 
+    # Fill the table rows
+    i=-1
+    for index, row in df.iterrows(): 
+        i += 1
+        propensity = row['propensity']
+        # ln_propensity = np.log(propensity)
+        # if propensity < 1:
+        #     continue
+        token = row['token']
+        color = row['color']
+        voynichese_value = display_voynichese(text=token, color=color, render=False)
+        if color == 'grey':
+            token = f"<del>{token}</del>"
+
+        prob_ref= row['p_ref']
+        p_value = row['p_value']
+        comment = comment_dict[row['comment_code']]
+        
+        observed_count = int(row['n_x'])
+        expected_count =  int(np.round(prob_ref * num_tokens_in_target))
+        bayes = row['bayes']
+        bayes = f"{np.log(bayes):.1f}" if bayes > 0 else '0'
+        if bayes=='10.0':
+            bayes = '>10'
+            
+        html_1 += f"""            
+    <td>{voynichese_value}</td>
+    <td>{token}</td>
+    <td>{expected_count}</td>
+    <td>{observed_count}</td>
+    <td>{propensity:.1f}</td>
+    <td>{p_value:.6f}</td>
+    <td>{bayes}</td>
+    <td>{comment}</td>
+</tr>"""
+            
+
+    html_1 += """
+</table>"""
+    html += html_1
+
+
+    # Display the HTML table
+    display(HTML(html))
+    if file_name:
+        current_dir = os.getcwd()
+        print(f"current_dir = {current_dir}")
+        html_filename = file_name + '.html'
+        absolute_html_file_path = os.path.join(current_dir, html_filename)
+        png_filename = file_name + '.png'
+        absolute_png_file_path = os.path.join(current_dir, png_filename)
+        with open(html_filename, 'w') as file:
+            file.write(html_top + html + html_bottom)
+            print(f"Wrote {html_filename}")
+        print(f"absolute_html_file_path = {absolute_html_file_path}")
+        render_html_to_image(absolute_html_file_path, absolute_png_file_path, width=width, height=height+129, crop=True)
+        
 
 
 # -------------------- Cell --------------------
-plot_two_letter_combination_histogram(tokens, 5, 20)
+display_bunn_comparison_summary('FIRST', -1, file_name='JUNK', width=630, height=500)
 
 
 # -------------------- Cell --------------------
