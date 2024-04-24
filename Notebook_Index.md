@@ -17,7 +17,7 @@ This notebook works through the preparation of a clean study corpus by
 <h3>Z01.2: Token Cohorts</h3>
 This notebook sets up the several cohorts of tokens used for the study.
 
-[Go to notebook](./Z01.2 Token Cohorts.ipynb)
+[Go to notebook]('./Z01.2 Token Cohorts.ipynb')
   
 <h3>Z01.3: Token Length Analysis</h3>
 This notebook shows the calculations for the analysis of token length distributions for the different cohorts.
