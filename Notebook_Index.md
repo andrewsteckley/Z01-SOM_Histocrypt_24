@@ -7,34 +7,33 @@
 # Python Calculation Jupyter Notebooks
 This supplemental material includes a series of Jupyter Notebooks. These are itemized below.
 
-<h3>[Z01.1: Preparation of Study Corpus]('Z01.1 Study Corpus for Study.ipynb')</h3>
-[Z01.1: Preparation of Study Corpus](./Z01.1_Preparation_of_Study_Corpus.ipynb)
-
-[Z01.1: Preparation of Study Corpus](./Z01.1_Preparation_of_Study_Corpus.ipynb)
-
+<h3>Z01.1: Preparation of Study Corpus</h3>
 This notebook works through the preparation of a clean study corpus by 
  extraction of data from the transliterated the Voynich Manuscript.
-[Z01.1: Preparation of Study Corpus](./Z01.1_Preparation_of_Study_Corpus.ipynb)
+
+[Go to notebook](./Z01.1_Preparation_of_Study_Corpus.ipynb)
 
 
-<h3>[Z01.2: Token Cohorts](Z01.2 Token Cohorts.ipynb)</h3>
-
-[Z01.2: Token Cohorts](Z01.2 Token Cohorts.ipynb)
+<h3>Z01.2: Token Cohorts</h3>
 This notebook sets up the several cohorts of tokens used for the study.
 
-* Go to [Z01.2: Token Cohorts](./Z01.2 Token Cohorts.ipynb)
-* Go to [Z01.2: Token Cohorts]('./Z01.2 Token Cohorts.ipynb')
+[Go to notebook](./Z01.2 Token Cohorts.ipynb)
   
 <h3>Z01.3: Token Length Analysis</h3>
 This notebook shows the calculations for the analysis of token length distributions for the different cohorts.
+
+[Go to notebook](./Z01.3 Token Length Analysis.ipynb)
 
 
 <h3>Z01.4: Token Propensities Analysis</h3>
 This notebook shows the calculations for the analysis of token usage propensities for each of the subject cohorts.
 
+[Go to notebook](./Z01.4 Token Propensities Analysis.ipynb)
   
 <h3>Z01.5: Extra Analyses</h3>
+this notebook contains additional calculations and charts not directly discussed in the paper.
     
+[Go to notebook](./Z01.5 Extra Analyses.ipynb)
 
 <h2>Python Dependencies</h2>
 Python 3.10 has been used for all analyses.
