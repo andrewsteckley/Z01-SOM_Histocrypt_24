@@ -8,19 +8,20 @@
 This supplemental material includes a series of Jupyter Notebooks. These are itemized below.
 
 <h3>[Z01.1: Preparation of Study Corpus]('Z01.1 Study Corpus for Study.ipynb')</h3>
-[Z01.1: Preparation of Study Corpus]('./Z01.1 Preparation of Study Corpus.ipynb')
-or
-[Z01.1: Preparation of Study Corpus](./Z01.1_Preparation_of_Study_Corpus.ipynb)
-
-* [Z01.1: Preparation of Study Corpus](./Z01.1_Preparation_of_Study_Corpus.ipynb)
 
 This notebook works through the preparation of a clean study corpus by 
  extraction of data from the transliterated the Voynich Manuscript.
 
+* Go to [Z01.1: Preparation of Study Corpus](./Z01.1_Preparation_of_Study_Corpus.ipynb)
+
 
 <h3>[Z01.2: Token Cohorts](Z01.2 Token Cohorts.ipynb)</h3>
+
 [Z01.2: Token Cohorts](Z01.2 Token Cohorts.ipynb)
 This notebook sets up the several cohorts of tokens used for the study.
+
+* Go to [Z01.2: Token Cohorts](./Z01.2 Token Cohorts.ipynb)
+* Go to [Z01.2: Token Cohorts]('./Z01.2 Token Cohorts.ipynb')
   
 <h3>Z01.3: Token Length Analysis</h3>
 This notebook shows the calculations for the analysis of token length distributions for the different cohorts.
