@@ -8,9 +8,9 @@
 This supplemental material includes a series of Jupyter Notebooks. These are itemized below.
 
 <h3>[Z01.1: Study Corpus for Study]('Z01.1 Study Corpus for Study.ipynb')</h3>
-[Z01.1: Study Corpus for Study]('Z01.1 Preparation of Study Corpus.ipynb')
+[Z01.1: Study Corpus for Study]('./Z01.1 Preparation of Study Corpus.ipynb')
 or
-[Z01.1: Study Corpus for Study](Z01.1_Preparation_of_Study_Corpus.ipynb)
+[Z01.1: Study Corpus for Study](./Z01.1_Preparation_of_Study_Corpus.ipynb)
 
 This notebook works through the preparation of a clean study corpus by 
  extraction of data from the transliterated the Voynich Manuscript.
