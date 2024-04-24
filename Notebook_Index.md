@@ -7,12 +7,12 @@
 # Python Calculation Jupyter Notebooks
 This supplemental material includes a series of Jupyter Notebooks. These are itemized below.
 
-<h3>Z01.1: Study Corpus for Study</h3>
+<h3>[Z01.1: Study Corpus for Study]('Z01.1 Study Corpus for Study.ipynb')</h3>
 This notebook works through the preparation of a clean study corpus by 
  extraction of data from the transliterated the Voynich Manuscript.
 
 
-<h3>Z01.2: Token Cohorts</h3>
+<h3>[Z01.2: Token Cohorts](Z01.2 Token Cohorts.ipynb)</h3>
 This notebook sets up the several cohorts of tokens used for the study.
   
 <h3>Z01.3: Token Length Analysis</h3>
