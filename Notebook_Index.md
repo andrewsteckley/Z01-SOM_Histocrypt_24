@@ -17,23 +17,23 @@ This notebook works through the preparation of a clean study corpus by
 <h3>Z01.2: Token Cohorts</h3>
 This notebook sets up the several cohorts of tokens used for the study.
 
-[Go to notebook]('./Z01.2 Token Cohorts.ipynb')
+[Go to notebook]('./Z01.2_Token_Cohorts.ipynb')
   
 <h3>Z01.3: Token Length Analysis</h3>
 This notebook shows the calculations for the analysis of token length distributions for the different cohorts.
 
-[Go to notebook](./Z01.3 Token Length Analysis.ipynb)
+[Go to notebook](./Z01.3_Token_Length_Analysis.ipynb)
 
 
 <h3>Z01.4: Token Propensities Analysis</h3>
 This notebook shows the calculations for the analysis of token usage propensities for each of the subject cohorts.
 
-[Go to notebook](./Z01.4 Token Propensities Analysis.ipynb)
+[Go to notebook](./Z01.4_Token_Propensities_Analysis.ipynb)
   
 <h3>Z01.5: Extra Analyses</h3>
 this notebook contains additional calculations and charts not directly discussed in the paper.
     
-[Go to notebook](./Z01.5 Extra Analyses.ipynb)
+[Go to notebook](./Z01.5_Extra_Analyses.ipynb)
 
 <h2>Python Dependencies</h2>
 Python 3.10 has been used for all analyses.
