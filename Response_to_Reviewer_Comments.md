@@ -20,7 +20,7 @@ for publication.
 But in a few other cases, where we felt the comment's concern 
 was not actually applicable, we felt it still deserved more than 
 the appearance of 
-being ignored. We have therefor provided some additional response to those below.
+being ignored. We have therefore provided some additional response to those below.
 
 ------
 
