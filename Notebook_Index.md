@@ -28,7 +28,7 @@ This notebook shows the calculations for the analysis of token length distributi
 <h3>Z01.4: Token Propensities Analysis</h3>
 This notebook shows the calculations for the analysis of token usage propensities for each of the subject cohorts.
 
-[Go to notebook](./Z01.4_Token_Propensities_By_Location.ipynb)
+[Go to notebook](./Z01.4_Token_Propensities_Analysis.ipynb)
   
 <h3>Z01.5: Extra Analyses</h3>
 this notebook contains additional calculations and charts not directly discussed in the paper.
