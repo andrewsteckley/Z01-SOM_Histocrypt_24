@@ -130,13 +130,12 @@ the null hypothesis is true?”, but rather “What is the probability
 that the differences are due to chance sampling?”)
 <p>
 
-<br>
 <li>Mixed effects modeling is for cases involving 
 multiple  input variables (in this context, causes) to predict an 
 output (in this context, a statistical result). We have not seen how it 
 would or should be used in our case.
 <p>
-<br>
+
 <li>A Chi-Squared (aka “Chi-square”) test is used to test if there's a 
 significant difference between what we expect to see and what is actually observed for a particular situation or phenomenon. This is directly applicable to our case.
 
