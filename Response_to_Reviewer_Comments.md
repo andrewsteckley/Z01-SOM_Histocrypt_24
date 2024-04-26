@@ -73,7 +73,8 @@ Additionally, in traditional English, a masculine pronoun is used not only
 when the referent is known to be male, but also when the gender is unknown or 
 contextually irrelevant, while a female pronoun implies some significant expectation that the 
 referent may be specifically female.  A plural pronoun was not appropriate and potentially confusing, given our focus on the behaviour of a single scribe
-and our intentional reduction of data to that for a single scribe.<br>
+and our intentional reduction of data to that for a single scribe.
+<br>
 <p>
 It is worth noting though that, while it would be a surprising find, 
 there is a case to be made for one or more of the scribes being female based
