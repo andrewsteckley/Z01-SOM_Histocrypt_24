@@ -75,6 +75,7 @@ contextually irrelevant, while a female pronoun implies some significant expecta
 referent may be specifically female.  A plural pronoun was not appropriate and potentially confusing, given our focus on the behaviour of a single scribe
 and our intentional reduction of data to that for a single scribe.
 <br>
+<br>
 <p>
 It is worth noting though that, while it would be a surprising find, 
 there is a case to be made for one or more of the scribes being female based
