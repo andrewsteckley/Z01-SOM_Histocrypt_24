@@ -82,7 +82,7 @@ there is a case to be made for one or more of the scribes being female based
 on the fact that the vast majority of the figures depicted are women.
 This is an interesting hypothesis in itself, and probably deserves its own analysis, 
 but the argument is speculative and undeveloped. So alluding to it, particularly without clarity or explanation,
-still seemed an unnecessary distraction.
+still seemed an unnecessary and out of scope.
 
 </ul>
 
