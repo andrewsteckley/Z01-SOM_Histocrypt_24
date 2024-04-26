@@ -60,17 +60,28 @@ please use a gender-neutral term
 <b>Response:</b> 
 <br>
 <ul>
-We kept the use of the pronoun "he" because doing otherwise would provide a cognitive distraction while 
-serving no apparent purpose relevant to the study. 
-This would not be the case if there was some reason to believe that the Voynich scribe might be female, or if 
+This suggested change was a difficult one to decide on. We kept the use of the pronoun "he" because we found that doing otherwise produced a cognitive 
+distraction while 
+serving no apparent purpose.  
+This would not be the case if there was a notable reason to believe that the 
+Voynich scribe might be female, or if 
 the possibility of it played
 some role in the study and its analyses.  Neither is the case here.
-The vast majority of scribes in the medieval period  (and for a long time after) 
-were male. In fact, although possible, it would be extraordinary if a Voynich scribe turns out otherwise. 
-And in traditional English, a masculine pronoun is used not only
+The vast majority of scribes in the medieval period (and for a long time after) 
+were male. In fact, it would be extraordinary if a Voynich scribe turns out otherwise. 
+Additionally, in traditional English, a masculine pronoun is used not only
 when the referent is known to be male, but also when the gender is unknown or 
 contextually irrelevant, while a female pronoun implies some significant expectation that the 
-referent may be specifically female.
+referent may be specifically female.  A plural pronoun was not appropriate and potentially confusing, given our focus on the behaviour of a single scribe
+and our intentional reduction of data to that for a single scribe.
+<p>
+It is worth noting though that, while it would be a surprising find, 
+there is a case to be made for one or more of the scribes being female based
+on the fact that the vast majority of the figures depicted are women.
+This is an interesting hypothesis in itself, and probably deserves its own analysis, 
+but the argument is speculative and undeveloped. So alluding to it, particularly without clarity or explanation
+still seems an unnecessary distraction.
+
 </ul>
 
 ------
