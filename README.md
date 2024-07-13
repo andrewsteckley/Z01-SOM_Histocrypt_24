@@ -12,7 +12,9 @@
 
 ## Overview
 This site provides Supplemental Material for the 
-research paper "Signs of Scribal Intent in the Voynich Manuscript".
+research paper "Signs of Scribal Intent in the Voynich Manuscript" which was presented at Histocrypt 2024 at Oxford University.
+The published paper may be found in the [full proceedings](https://dspace.ut.ee/items/cad14117-84f7-411e-b71f-6865f4ed3676) or
+as an [individual paper](https://dspace.ut.ee/items/f57c5030-067e-4872-942f-f9c153e49747).
 
 
 The paper presents the results of a QuantumLynx Research study series exploring
