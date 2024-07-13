@@ -6,7 +6,7 @@
 - [Catalog of Tokens with Propensity for Various Positions](Catalog_of_Token_Propensities.md#Catalog-of-Tokens-with-Propensity-for-Various-Positions)
 - [Additional Figures](Additional_Figures.md#Additional-Figures)
 - [Responses to Reiewers' Comments](Response_to_Reviewer_Comments.md)
-- [Histocrypt 2024 Presentation Slide Deck](Slide%20Presentation/Subtle%20Signs%20Of%20Scribal%20Intent.pptx)
+- [Histocrypt 2024 Presentation Slide Deck](https://docs.google.com/presentation/d/1b68BAZMNlvpV6L_RyBUUMHbbUUwTiu0o)
 
 
 
