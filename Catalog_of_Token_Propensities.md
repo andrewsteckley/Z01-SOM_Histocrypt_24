@@ -1,6 +1,6 @@
 
 ## Catalog of Tokens with Propensity for Various Positions
-
+Note that these tables only list those tokens that occur at least once within the MIDDLE cohort.  There are many tokens that occur only in one or more of the other cohorts; they represent another category of tokens whose positional relationships could be seperately considered.
 <div align="right">
 
 [Back to Table of Contents](README.md#Table-of-Contents)
