@@ -16,7 +16,7 @@ from voynichlib.utils import display_voynichese
 
 
 # -------------------- Cell --------------------
-do_parametric_studies = True
+do_parametric_studies = False
 MAX_BAYES = np.exp(10)
 MAX_PROPENSITY = 999
 THRESHOLDS = {
@@ -112,6 +112,54 @@ def compile_token_propensity_df(target_cohort, reference_cohort, p_value_thresho
     pass
     return df
 
+def all_compile_token_propensity_df(target_cohort, reference_cohort, p_value_threshold, bayes_threshold):
+    top_token_length_dict = get_top_vocabulary_tokens_lengths_dict('ALL')
+    df = pd.DataFrame(columns = ['token', 'glyph_count', 'N_ref', 'n_ref', 'N_x', 'n_x', 'p_ref', 'p_x', 'p_value', 'sig_p_value', 'sig_BF', 'propensity', 'bayes', 'binom_stat_le', 'binom_stat_gt'])
+    for token, w in top_token_length_dict.items():
+        pmf_ref = pmfs_by_c[reference_cohort]
+        N_ref = pmf_ref.total_count
+        n_ref = pmf_ref.count(token) if N_ref > 0 else 0
+        p_ref = pmf_ref.prob(token, smooth=smooth)
+
+        pmf_x = pmfs_by_c[target_cohort]
+        N_x = pmf_x.total_count
+        n_x = pmf_x.count(token) if N_x > 0 else 0
+        p_x = pmf_x.prob(token, smooth=smooth)
+
+        p_value = calculate_binomial_probability(n_x, N_x, p_ref)
+
+        bayes_factor = bayes_factor_binomial(n_x, N_x, p_x, p_ref)
+        bayes_factor = min(MAX_BAYES, bayes_factor)
+
+        binom_stat_le =  binom.cdf(n_x, N_x, p_ref)
+        binom_stat_gt =  binom.cdf(n_x, N_x, 1. -p_ref)
+
+        if target_cohort.startswith('Rand'):
+            propensity = 1.
+        else:
+            propensity = p_x/p_ref  if p_ref > 0 else MAX_PROPENSITY
+            pass
+        verdict_p_value = p_value < p_value_threshold
+        verdict_bayes_factor = bayes_factor > bayes_threshold
+        df.loc[len(df)] = [token,
+                           top_token_length_dict[token],
+                           N_ref,
+                           n_ref,
+                           N_x,
+                           n_x,
+                           p_ref,
+                           p_x,
+                           p_value,
+                           verdict_p_value,
+                           verdict_bayes_factor,
+                           np.round(propensity,1),
+                           bayes_factor,
+                          binom_stat_le,
+                          binom_stat_gt]
+        pass
+    df.set_index('token', inplace=True)
+    pass
+    return df
 
 
 # -------------------- Cell --------------------
@@ -266,7 +314,7 @@ N_tokens_df = pd.DataFrame(columns = ['cohort',  'N_p', 'N_p_af', 'N_p_av', 'N_b
 for cohort in cohorts_with_randoms:
     if cohort == 'MIDDLE':
         continue
-    token_propensity_dfs[cohort] = compile_token_propensity_df(cohort, 
+    token_propensity_dfs[cohort] = all_compile_token_propensity_df(cohort,
                                                                reference_cohort, 
                                                                THRESHOLDS['p_value'], 
                                                                THRESHOLDS['bayes_factor'])
