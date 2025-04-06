@@ -1017,7 +1017,7 @@ def display_cohort_tendency_summary(cohort: str, component:str, stat_type:str, f
         table_title = f"Positional Tendency Tokens<br>{cohort_title_dict[cohort]}"
         num_tokens_in_target = pmfs_by_c[cohort].total_count
         num_tokens_in_ref = pmfs_by_c[reference_cohort].total_count
-                component_text = 'Tokens'
+        component_text = 'Tokens'
         
     elif component == 'glyphs':
         df = glyph_propensity_dfs[cohort].sort_values(by='propensity', ascending=False)
